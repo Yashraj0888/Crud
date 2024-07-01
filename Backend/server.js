@@ -45,6 +45,41 @@ app.post('/create', (req, res) => {
     });
 });
 
+app.put('/update/:id', (req, res) => {
+    const sql = "UPDATE users SET `Name` = ?, `Email` = ? WHERE ID = ?";
+    const values = [
+        req.body.name,
+        req.body.email
+    ];
+
+    const id = req.params.id;
+
+    db.query(sql, [...values, id], (err, result) => {
+        if (err) {
+            console.error('Error updating data:', err);
+            return res.json("Error");
+        }
+        return res.json(result);
+    });
+});
+app.delete('/users/:id', (req, res) => {
+    const sql = "DELETE FROM users WHERE ID=?";
+    const values = [
+        req.body.name,
+        req.body.email
+    ];
+
+    const id = req.params.id;
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error('Error updating data:', err);
+            return res.json("Error");
+        }
+        return res.json(result);
+    });
+});
+
 app.listen(8081, () => {
     console.log("Server is running on port 8081");
 });

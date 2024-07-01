@@ -14,6 +14,14 @@ function Student() {
             console.log(err);
         })
     },[])
+
+    const handleDel=async(id)=>{
+        try{await axios.delete("http://localhost:8081/users/"+id)
+        window.location.reload();
+        }catch(err){
+            console.log(err);
+        }
+    }
   return (
     <div>
       <Link to="/Create">Add+</Link>
@@ -30,8 +38,8 @@ function Student() {
                     <td>{data.Name}</td>
                     <td>{data.Email}</td>
                     <td>
-                        <button>Update</button>
-                        <button>Delete</button>
+                        <Link to={`update/${data.ID}`}>Update</Link>
+                        <button onClick={e=>handleDel(data.ID)}>Delete</button>
                     </td>
                 </tr>
             ))}
